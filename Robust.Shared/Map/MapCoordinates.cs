@@ -104,8 +104,6 @@ namespace Robust.Shared.Map
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj))
-                return false;
             return obj is MapCoordinates other && Equals(other);
         }
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text.Json.Serialization;
@@ -53,7 +53,6 @@ namespace Robust.Shared.Maths
         /// <returns>True if Object and vector are equal.</returns>
         public override readonly bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
             return obj is Vector2u vec && Equals(vec);
         }
 

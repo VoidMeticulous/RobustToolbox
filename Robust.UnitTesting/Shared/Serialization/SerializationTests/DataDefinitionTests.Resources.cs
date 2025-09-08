@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
@@ -385,13 +385,10 @@ public sealed partial class DataDefinitionTests
 
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj))
-                return false;
-            if (ReferenceEquals(this, obj))
-                return true;
-            if (obj.GetType() != this.GetType())
-                return false;
-            return Equals((DataDummyClass) obj);
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((DataDummyClass)obj);
         }
 
         public override int GetHashCode()

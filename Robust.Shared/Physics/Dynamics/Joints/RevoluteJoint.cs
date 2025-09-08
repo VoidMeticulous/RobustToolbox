@@ -455,7 +455,7 @@ public sealed partial class RevoluteJoint : Joint, IEquatable<RevoluteJoint>
 
     public override bool Equals(object? obj)
     {
-        if (ReferenceEquals(null, obj)) return false;
+        if (obj is null) return false;
         if (obj.GetType() != GetType()) return false;
         return Equals((RevoluteJoint) obj);
     }

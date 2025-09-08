@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
@@ -99,8 +99,6 @@ namespace Robust.Shared.Map
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj))
-                return false;
             return obj is TileRef other && Equals(other);
         }
 

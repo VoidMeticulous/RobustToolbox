@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Numerics;
 using Robust.Shared.Utility;
 
@@ -83,7 +83,6 @@ namespace Robust.Shared.Maths
         /// <inheritdoc />
         public override readonly bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
             return obj is Circle circle && Equals(circle);
         }
 

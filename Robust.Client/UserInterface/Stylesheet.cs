@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -285,10 +285,12 @@ namespace Robust.Client.UserInterface
 
         public int CompareTo(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return 1;
-            return obj is StyleSpecificity other
-                ? CompareTo(other)
-                : throw new ArgumentException($"Object must be of type {nameof(StyleSpecificity)}");
+            if (obj == null) return 1;
+
+            if (obj is not StyleSpecificity other)
+                throw new ArgumentException($"Object must be of type {nameof(StyleSpecificity)}");
+
+            return CompareTo(other);
         }
 
         public override string ToString()

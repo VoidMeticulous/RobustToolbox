@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Robust.Shared.Serialization;
 
 namespace Robust.Shared.Timing
@@ -33,7 +33,6 @@ namespace Robust.Shared.Timing
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
             return obj is GameTick other && Equals(other);
         }
 

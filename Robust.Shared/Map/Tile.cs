@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using JetBrains.Annotations;
 using Robust.Shared.Maths;
@@ -128,8 +128,6 @@ public readonly struct Tile : IEquatable<Tile>, ISpanFormattable
     /// <inheritdoc />
     public override bool Equals(object? obj)
     {
-        if (ReferenceEquals(null, obj))
-            return false;
         return obj is Tile other && Equals(other);
     }
 

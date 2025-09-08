@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -98,7 +98,6 @@ namespace Robust.Shared.Maths
         /// <returns>True if Object and vector are equal.</returns>
         public readonly override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
             return obj is Vector2i vector && Equals(vector);
         }
 
