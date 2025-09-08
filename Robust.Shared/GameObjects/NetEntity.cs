@@ -13,16 +13,13 @@ namespace Robust.Shared.GameObjects;
 /// <summary>
 /// Network identifier for entities; used by client and server to refer to the same entity where their local <see cref="EntityUid"/> may differ.
 /// </summary>
+/// <param name="id">Network id used to construct the NetEntity <see cref="Id"/></param>
 [Serializable, NetSerializable, CopyByRef]
-public readonly struct NetEntity : IEquatable<NetEntity>, IComparable<NetEntity>, ISpanFormattable
+public readonly struct NetEntity(int id) : IEquatable<NetEntity>, IComparable<NetEntity>, ISpanFormattable
 {
-    public readonly int Id;
+    public readonly int Id = id;
 
-    public const int ClientEntity = 2 << 29;
-
-    /*
-     * Differed to EntityUid to be more consistent with Arch.
-     */
+    public const int ClientEntity = 1 << 30;
 
     /// <summary>
     ///     An Invalid entity UID you can compare against.
@@ -33,14 +30,6 @@ public readonly struct NetEntity : IEquatable<NetEntity>, IComparable<NetEntity>
     ///     The first entity UID the entityManager should use when the manager is initialized.
     /// </summary>
     public static readonly NetEntity First = new(1);
-
-    /// <summary>
-    ///     Creates an instance of this structure, with the given network ID.
-    /// </summary>
-    public NetEntity(int id)
-    {
-        Id = id;
-    }
 
     public bool Valid => IsValid();
 
@@ -95,29 +84,16 @@ public readonly struct NetEntity : IEquatable<NetEntity>, IComparable<NetEntity>
     ///     a valid Entity.
     /// </summary>
     [Pure]
-    public bool IsValid()
-    {
-        return Id > 0;
-    }
+    public bool IsValid() => Id > 0;
 
     /// <inheritdoc />
-    public bool Equals(NetEntity other)
-    {
-        return Id == other.Id;
-    }
+    public bool Equals(NetEntity other) => Id == other.Id;
 
     /// <inheritdoc />
-    public override bool Equals(object? obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        return obj is NetEntity id && Equals(id);
-    }
+    public override bool Equals(object? obj) => obj is NetEntity id && Equals(id);
 
     /// <inheritdoc />
-    public override int GetHashCode()
-    {
-        return Id;
-    }
+    public override int GetHashCode() => Id;
 
     /// <summary>
     ///     Check for equality by value between two objects.
@@ -153,10 +129,7 @@ public readonly struct NetEntity : IEquatable<NetEntity>, IComparable<NetEntity>
         return Id.ToString();
     }
 
-    public string ToString(string? format, IFormatProvider? formatProvider)
-    {
-        return ToString();
-    }
+    public string ToString(string? format, IFormatProvider? formatProvider) => ToString();
 
     public bool TryFormat(
         Span<char> destination,
@@ -176,13 +149,11 @@ public readonly struct NetEntity : IEquatable<NetEntity>, IComparable<NetEntity>
     }
 
     /// <inheritdoc />
-    public int CompareTo(NetEntity other)
-    {
-        return Id.CompareTo(other.Id);
-    }
+    public int CompareTo(NetEntity other) => Id.CompareTo(other.Id);
 
     public bool IsClientSide() => (Id & ClientEntity) == ClientEntity;
 
+    // TODO: Extract ViewVariables into extension methods. This shouldn't belong in core code.
     #region ViewVariables
 
 
