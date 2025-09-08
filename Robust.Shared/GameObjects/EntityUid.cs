@@ -12,10 +12,13 @@ namespace Robust.Shared.GameObjects
     ///     This type contains a network identification number of an entity.
     ///     This can be used by the EntityManager to access an entity
     /// </summary>
+    /// <param name="id">
+    ///     Network ID used to construct the EntityUid.
+    /// </param>
     [CopyByRef]
-    public readonly struct EntityUid : IEquatable<EntityUid>, IComparable<EntityUid>, ISpanFormattable
+    public readonly struct EntityUid(int id) : IEquatable<EntityUid>, IComparable<EntityUid>, ISpanFormattable
     {
-        public readonly int Id;
+        public readonly int Id = id;
 
         /// <summary>
         ///     An Invalid entity UID you can compare against.
@@ -27,23 +30,12 @@ namespace Robust.Shared.GameObjects
         /// </summary>
         public static readonly EntityUid FirstUid = new(1);
 
-        /// <summary>
-        ///     Creates an instance of this structure, with the given network ID.
-        /// </summary>
-        public EntityUid(int id)
-        {
-            Id = id;
-        }
-
         public bool Valid => IsValid();
 
         /// <summary>
         ///     Creates an entity UID by parsing a string number.
         /// </summary>
-        public static EntityUid Parse(ReadOnlySpan<char> uid)
-        {
-            return new EntityUid(int.Parse(uid));
-        }
+        public static EntityUid Parse(ReadOnlySpan<char> uid) => new EntityUid(int.Parse(uid));
 
         public static bool TryParse(ReadOnlySpan<char> uid, out EntityUid entityUid)
         {
@@ -62,21 +54,14 @@ namespace Robust.Shared.GameObjects
         ///     a valid Entity.
         /// </summary>
         [Pure]
-        public bool IsValid()
-        {
-            return Id > 0;
-        }
+        public bool IsValid() => Id > 0;
 
         /// <inheritdoc />
-        public bool Equals(EntityUid other)
-        {
-            return Id == other.Id;
-        }
+        public bool Equals(EntityUid other) => Id == other.Id;
 
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
             return obj is EntityUid id && Equals(id);
         }
 
@@ -117,31 +102,20 @@ namespace Robust.Shared.GameObjects
         }
 
         /// <inheritdoc />
-        public override string ToString()
-        {
-            return Id.ToString();
-        }
+        public override string ToString() => Id.ToString();
 
-        public string ToString(string? format, IFormatProvider? formatProvider)
-        {
-            return ToString();
-        }
+        public string ToString(string? format, IFormatProvider? formatProvider) => ToString();
 
         public bool TryFormat(
             Span<char> destination,
             out int charsWritten,
             ReadOnlySpan<char> format,
-            IFormatProvider? provider)
-        {
-            return Id.TryFormat(destination, out charsWritten);
-        }
+            IFormatProvider? provider) => Id.TryFormat(destination, out charsWritten);
 
         /// <inheritdoc />
-        public int CompareTo(EntityUid other)
-        {
-            return Id.CompareTo(other.Id);
-        }
+        public int CompareTo(EntityUid other) => Id.CompareTo(other.Id);
 
+        // TODO: Extract to extension methods. This does not belong in core.
         #region ViewVariables
 
 
